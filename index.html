@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="lfc.png" type="image/x-icon">
+    <title>Attendance Management System</title>
+    <link rel="stylesheet" href="subscribe.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+    <br> <br>
+        <h1>Attendance Management System</h1>
+    <br> 
+    <div class="wrapper">
+    <form>
+        <h1 class="title">Welcome</h1>
+        <h2 id="current-datetime"><br></h2>
+        <br>  
+        
+         <br>
+        
+            <h2 class="title">First-Time Users</h2>
+            <br>
+        <div class="newsletter-row">
+        <input type="text" id="name" name="name" placeholder="Enter your Full Name" required="">
+        <button id="presentBtn">Present</button>
+        </div>
+    </form>
+</div>
+<br>
+<hr>
+    <footer>
+        <p> Copyright &copy; 2025 Attendance Management System. All rights reserved.</p>
+    </footer>
+<script>
+const btn = document.getElementById('presentBtn');
+btn.addEventListener('click', async () => {
+  const name = document.getElementById('name').value.trim();
+  if(!name) return alert('Enter your name');
+
+  try {
+    const res = await fetch('https://attendance-backend-v6kl.onrender.com/api/attendance/first-time', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name })
+    });
+    const data = await res.json();
+    if(res.ok) alert('Attendance saved!');
+    else alert(data.message);
+  } catch(err) {
+    console.error(err);
+    alert('Server error');
+  }
+});
+</script>
+<script>
+  function updateDateTime() {
+    const now = new Date();
+
+    // Format: Sunday, 14th September, 2025
+    const optionsDate = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = now.toLocaleDateString("en-ZA", optionsDate);
+
+    // Format: 08:00 AM
+    const optionsTime = { hour: "2-digit", minute: "2-digit", hour12: true };
+    const formattedTime = now.toLocaleTimeString("en-ZA", optionsTime);
+
+    document.getElementById("current-datetime").innerHTML =
+      `${formattedDate}  <br> ${formattedTime}`;
+  }
+
+  // Update every second
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+</script>
+
+</body>
+</html>

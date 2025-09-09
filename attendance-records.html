@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="lfc.png" type="image/x-icon">
+    <title>Attendance Records</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page-container">
+        <h1>Attendance Records</h1>
+        <br>
+
+    <div class="wrapper">
+        <h1 class="title">Welcome</h1>
+        <h2 id="current-datetime"><br></h2>
+        <br>  
+      <div class="table-container">
+        <section id="attendance-records">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Present</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Attendance records will be dynamically populated here -->
+                </tbody>
+                <script src="attendance-records.js"></script>
+            </table>
+        </section>
+        </div>
+</div>
+<hr>
+    <footer>
+       
+        <p> Copyright &copy; 2025 Attendance Management System. All rights reserved.</p>
+    </footer>
+    
+<script>
+  function updateDateTime() {
+    const now = new Date();
+
+    // Format: Sunday, 14th September, 2025
+    const optionsDate = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = now.toLocaleDateString("en-ZA", optionsDate);
+
+    // Format: 08:00 AM
+    const optionsTime = { hour: "2-digit", minute: "2-digit", hour12: true };
+    const formattedTime = now.toLocaleTimeString("en-ZA", optionsTime);
+
+    document.getElementById("current-datetime").innerHTML =
+      `${formattedDate}  <br> ${formattedTime}`;
+  }
+
+  // Update every second
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+</script>
+
+  </div>
+    <style>
+      #attendance-records table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        white-space: nowrap;
+      }
+      #attendance-records table thead {
+        font-weight: 700;
+      }
+      #attendance-records table thead th {
+        background: black;
+        border: none;
+        padding: 6px 0;
+        text-align: center;
+      }
+      #attendance-records table td {
+        border: 1px solid black;
+        text-align: center;
+      }
+      #attendance-records table thead th:nth-child(1) {
+        width: 180px;
+      }
+      #attendance-records table thead th:nth-child(2) {
+        width: 230px;
+      }
+      #attendance-records table thead th:nth-child(3){
+        width: 70px;
+      }
+    </style>
+</body>
+</html>     
