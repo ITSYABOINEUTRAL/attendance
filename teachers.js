@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!tableContainer) return; // stop if container not found
   try {
     // Fetch data from backend
-    const response = await fetch("https://attendance-backend-v6kl.onrender.com/api/attendance/all");
+    const response = await fetch("https://attendance-backend-nt8h.onrender.com/api/attendance/all");
     if (!response.ok) throw new Error("Failed to fetch attendance data");
 
     const data = await response.json();
@@ -49,6 +49,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   } catch (err) {
     console.error("Error loading teacher attendance:", err);
-    tableContainer.innerHTML = "<p style='color:red;'>Error loading attendance records.</p>";
+    tableContainer.innerHTML = "<p style='color:red; text-align:center;'>⚠️ Error loading attendance records.</p>";
   }
 });

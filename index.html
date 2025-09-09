@@ -37,20 +37,26 @@
     </footer>
 <script>
 const btn = document.getElementById('presentBtn');
-btn.addEventListener('click', async () => {
-  const name = document.getElementById('name').value.trim();
-  if(!name) return alert('Enter your name');
+const nameInput = document.getElementById('name');
+btn.addEventListener('click', async (e) => {
+  e.preventDefault(); // Prevent form submission
+  const name = nameInput.value.trim();
+  if (!name) return alert('Enter your name');
 
   try {
-    const res = await fetch('https://attendance-backend-v6kl.onrender.com/api/attendance/first-time', {
+    const res = await fetch('https://attendance-backend-nt8h.onrender.com/api/attendance/first-time', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name })
     });
     const data = await res.json();
-    if(res.ok) alert('Attendance saved!');
-    else alert(data.message);
-  } catch(err) {
+    if (res.ok) {
+      alert('Attendance saved!');
+      nameInput.value = '';
+    } else {
+      alert(data.message || 'Attendance already marked today!');
+    }
+  } catch (err) {
     console.error(err);
     alert('Server error');
   }

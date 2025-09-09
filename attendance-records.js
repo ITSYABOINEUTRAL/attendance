@@ -9,7 +9,7 @@ function formatToday() {
 // Fetch today's attendance
 async function fetchAttendance() {
   try {
-    const res = await fetch('https://attendance-backend-v6kl.onrender.com/api/attendance/today');
+    const res = await fetch('https://attendance-backend-nt8h.onrender.com/api/attendance/today');
     if (!res.ok) throw new Error('Failed to fetch attendance');
 
     const data = await res.json();
