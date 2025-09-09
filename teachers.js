@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const members = data.members;
 
     if (!members || members.length === 0) {
-      tableContainer.innerHTML = "<p>No attendance records found.</p>";
+      tableContainer.innerHTML = "<p style='text-align:center;'>No attendance records found.</p>";
       return;
     }
 
