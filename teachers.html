@@ -28,7 +28,6 @@
           <section id="attendance-records">
             <table width="100%">
                 <thead>
-                  <!-- Attendance records will be dynamically populated here -->
                     <tr>
                         <th>Name</th>
                         <th>Gender</th>
@@ -39,6 +38,21 @@
                 </tbody>
             </table>
         </section>
+        <br>
+ <button id="export-btn" style="
+    background: #000;
+    color: #fff;
+    font-weight: 500;
+    border: none;
+    width: 200px;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 16px;
+    border: 2px solid transparent;
+    transition: 0.3s ease;">
+    Export to Excel
+  </button>        
         </div>
 
 </div>
@@ -66,6 +80,8 @@
   setInterval(updateDateTime, 1000);
   updateDateTime();
 </script>
+<!-- SheetJS for Excel Export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="teachers.js"></script>
 </div>
     <style>
@@ -97,7 +113,7 @@
       
 /* Every other column (dates) gets same width */
 #attendance-records table thead th:not(:first-child) {
-  width: 180px;
+  width: 200px;
 }
     
     </style>

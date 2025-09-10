@@ -6,43 +6,41 @@ function formatToday() {
   return new Date().toLocaleDateString("en-US", options);
 }
 
-// Fetch today's attendance
+// Fetch members and today's attendance
 async function fetchAttendance() {
   try {
-    const res = await fetch('https://attendance-backend-nt8h.onrender.com/api/attendance/today');
-    if (!res.ok) throw new Error('Failed to fetch attendance');
+    // Fetch all members (with gender)
+    const resMembers = await fetch('https://attendance-backend-nt8h.onrender.com/api/attendance/all');
+    if (!resMembers.ok) throw new Error('Failed to fetch members');
 
-    const data = await res.json();
+    const data = await resMembers.json();
+    const dates = data.dates; // all past dates
+    const members = data.members;
+
     tableBody.innerHTML = '';
 
-    data.forEach(member => {
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
+    members.forEach(member => {
+      // Get today's attendance if exists
+      const todayRecord = member.attendance[today] || { firstService: 'Absent', secondService: 'Absent' };
+
       const tr = document.createElement('tr');
 
       tr.innerHTML = `
         <td>${formatToday()}</td>
         <td>${member.name}</td>
         <td>
-          <input 
-            type="checkbox">
+          <input type="checkbox" data-id="${member._id}" data-gender="Male" ${member.gender === 'Male' ? 'checked' : ''}>
         </td>
         <td>
-          <input 
-            type="checkbox">
+          <input type="checkbox" data-id="${member._id}" data-gender="Female" ${member.gender === 'Female' ? 'checked' : ''}>
         </td>
         <td>
-          <input 
-            type="checkbox">
+          <input type="checkbox" data-id="${member._id}" data-field="firstService" ${todayRecord.firstService === 'Present' ? 'checked' : ''}>
         </td>
         <td>
-          <input 
-            type="checkbox">
-        </td>
-        <td>
-          <input 
-            type="checkbox" 
-            ${member.status === 'Present' ? 'checked' : ''} 
-            data-id="${member._id}"
-          >
+          <input type="checkbox" data-id="${member._id}" data-field="secondService" ${todayRecord.secondService === 'Present' ? 'checked' : ''}>
         </td>
       `;
 
@@ -54,33 +52,49 @@ async function fetchAttendance() {
     console.error('Error loading attendance:', error);
     tableBody.innerHTML = `
       <tr>
-        <td colspan="3" style="color:white; text-align:center;">
+        <td colspan="6" style="color:white; text-align:center;">
           ⚠️ Failed to load attendance
         </td>
       </tr>`;
   }
 }
 
-// Listen to checkbox changes
+// Listen to checkbox changes and save status
 function attachCheckboxListeners() {
   const checkboxes = tableBody.querySelectorAll('input[type="checkbox"]');
+
   checkboxes.forEach(cb => {
     cb.addEventListener('change', async (e) => {
       const memberId = e.target.dataset.id;
+      const gender = e.target.dataset.gender;
+      const field = e.target.dataset.field;
       const status = e.target.checked ? 'Present' : 'Absent';
 
       try {
-        const res = await fetch(`https://attendance-backend-nt8h.onrender.com/api/attendance/${memberId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
+        let payload = {};
+
+        if (gender) {
+          // Uncheck the other gender checkbox
+          const row = e.target.closest('tr');
+          const otherGenderCb = row.querySelector(`input[data-gender]:not([data-gender="${gender}"])`);
+          if (otherGenderCb) otherGenderCb.checked = false;
+
+          payload = { gender };
+        } else if (field) {
+          payload[field] = status;
+        }
+
+        const res = await fetch(`https://attendance-backend-nt8h.onrender.com/api/attendance/${memberId}/service`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
         });
 
-        if (!res.ok) throw new Error('Failed to update attendance');
+        if (!res.ok) throw new Error('Failed to update');
       } catch (err) {
         console.error(err);
-        e.target.checked = !e.target.checked; // revert checkbox if update fails
-        alert('Failed to update attendance, try again.');
+        e.target.checked = !e.target.checked; // revert if update fails
+        alert('Failed to update, try again.');
       }
     });
   });

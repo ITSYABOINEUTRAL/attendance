@@ -51,8 +51,9 @@ btn.addEventListener('click', async (e) => {
     });
     const data = await res.json();
     if (res.ok) {
-      alert('Attendance saved!');
-      nameInput.value = '';
+  alert('Attendance saved!');
+  window.location.href = `https://attendance-dusky-sigma.vercel.app/attendance-records.html?memberId=${data.memberId}`;;
+
     } else {
       alert(data.message || 'Attendance already marked today!');
     }
