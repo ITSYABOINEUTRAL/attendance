@@ -2,7 +2,7 @@ const tableBody = document.querySelector('#attendance-records tbody');
 
 // Utility: format today’s date nicely
 function formatToday() {
-  const options = {  year: "numeric", month: "long", day: "numeric" };
+  const options = { year: "numeric", month: "long", day: "numeric" };
   return new Date().toLocaleDateString("en-US", options);
 }
 
@@ -91,6 +91,14 @@ function attachCheckboxListeners() {
         });
 
         if (!res.ok) throw new Error('Failed to update');
+
+        // ✅ Success alerts
+        if (gender) {
+          alert("Gender saved!");
+        } else if (field) {
+          alert("Attendance updated!");
+        }
+
       } catch (err) {
         console.error(err);
         e.target.checked = !e.target.checked; // revert if update fails
