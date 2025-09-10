@@ -23,6 +23,22 @@ async function fetchAttendance() {
         <td>${member.name}</td>
         <td>
           <input 
+            type="checkbox">
+        </td>
+        <td>
+          <input 
+            type="checkbox">
+        </td>
+        <td>
+          <input 
+            type="checkbox">
+        </td>
+        <td>
+          <input 
+            type="checkbox">
+        </td>
+        <td>
+          <input 
             type="checkbox" 
             ${member.status === 'Present' ? 'checked' : ''} 
             data-id="${member._id}"
@@ -54,10 +70,10 @@ function attachCheckboxListeners() {
       const status = e.target.checked ? 'Present' : 'Absent';
 
       try {
-        const res = await fetch(`https://attendance-backend-v6kl.onrender.com/api/attendance/${memberId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status })
+        const res = await fetch(`https://attendance-backend-nt8h.onrender.com/api/attendance/${memberId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
         });
 
         if (!res.ok) throw new Error('Failed to update attendance');
