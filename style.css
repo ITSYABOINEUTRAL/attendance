@@ -5,11 +5,9 @@
   box-sizing: border-box;
 }
 
-/* === Body & Background === */
+/* === Body === */
 body {
   font-family: "Poppins", sans-serif;
-  background: url("https://res.cloudinary.com/db8mcyukl/image/upload/v1757360140/1000342596_oocp3q.jpg"),#000;
-  background-size: cover;
   color: #e5e7eb;
   min-height: 100vh;
   padding: 2rem;
@@ -17,17 +15,32 @@ body {
   flex-direction: column;
   align-items: center;
   position: relative;
+  overflow-x: hidden;
 }
 
-
-/* Overlay for readability */
+/* === Background Layer (parallax on desktop/Android, fallback on iOS) === */
 body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("https://res.cloudinary.com/db8mcyukl/image/upload/v1757360140/1000342596_oocp3q.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -2;
+  -webkit-transform: translateZ(0); /* ✅ Safari fix */
+  transform: translateZ(0); /* ✅ helps on iOS */
+}
+
+/* === Dark Overlay === */
+body::after {
   content: "";
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.75);
   z-index: -1;
 }
+
 
 /* === Page Container === */
 .page-container {
