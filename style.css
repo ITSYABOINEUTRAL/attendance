@@ -63,6 +63,7 @@ h1, h2, h3 {
 .wrapper, .card {
     width: 100%;
     background: transparent;
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border-radius: 14px;
     padding: 1.5rem;
