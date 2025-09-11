@@ -8,8 +8,9 @@
 /* === Body & Background === */
 body {
   font-family: "Poppins", sans-serif;
-  background: url("https://res.cloudinary.com/db8mcyukl/image/upload/v1757360140/1000342596_oocp3q.jpg") no-repeat center center fixed;
+  background: url("https://res.cloudinary.com/db8mcyukl/image/upload/v1757360140/1000342596_oocp3q.jpg") no-repeat center center;
   background-size: cover;
+  background-attachment: scroll; /* ✅ Fix for iOS Safari */
   color: #e5e7eb;
   min-height: 100vh;
   padding: 2rem;
@@ -18,6 +19,7 @@ body {
   align-items: center;
   position: relative;
 }
+
 
 /* Overlay for readability */
 body::before {
