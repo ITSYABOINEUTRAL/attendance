@@ -8,7 +8,7 @@
 /* === Body & Background === */
 body {
   font-family: "Poppins", sans-serif;
-  background: url("https://res.cloudinary.com/db8mcyukl/image/upload/v1757360140/1000342596_oocp3q.jpg") no-repeat center center;
+  background: url("https://res.cloudinary.com/db8mcyukl/image/upload/v1757360140/1000342596_oocp3q.jpg");
   background-size: cover;
   color: #e5e7eb;
   min-height: 100vh;
