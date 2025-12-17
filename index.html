@@ -44,7 +44,7 @@ btn.addEventListener('click', async (e) => {
   if (!name) return alert('Enter your name');
 
   try {
-    const res = await fetch('https://attendance-backend-nt8h.onrender.com/api/attendance/first-time', {
+    const res = await fetch('https://attendance-backend-ub0l.onrender.com/api/attendance/first-time', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name })

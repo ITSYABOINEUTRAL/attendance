@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     // Fetch data from backend
-    const response = await fetch("https://attendance-backend-nt8h.onrender.com/api/attendance/all");
+    const response = await fetch("https://attendance-backend-ub0l.onrender.com/api/attendance/all");
     if (!response.ok) throw new Error("Failed to fetch attendance data");
 
     const data = await response.json();

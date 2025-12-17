@@ -10,7 +10,7 @@ function formatToday() {
 async function fetchAttendance() {
   try {
     // Fetch all members (with gender)
-    const resMembers = await fetch('https://attendance-backend-nt8h.onrender.com/api/attendance/all');
+    const resMembers = await fetch('https://attendance-backend-ub0l.onrender.com/api/attendance/all');
     if (!resMembers.ok) throw new Error('Failed to fetch members');
 
     const data = await resMembers.json();
@@ -84,7 +84,7 @@ function attachCheckboxListeners() {
           payload[field] = status;
         }
 
-        const res = await fetch(`https://attendance-backend-nt8h.onrender.com/api/attendance/${memberId}/service`, {
+        const res = await fetch(`https://attendance-backend-ub0l.onrender.com/api/attendance/${memberId}/service`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
